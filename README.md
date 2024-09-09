@@ -21,6 +21,8 @@ Add this to your `Cargo.toml`:
 devicons = "0.1.0"
 ```
 
+_**NOTE**: you'll need to use a [NerdFont](https://www.nerdfonts.com/) to properly display the icons._
+
 ## Usage
 
 Here’s a simple example of how to use `devicons` to retrieve a file icon with the dark theme:
