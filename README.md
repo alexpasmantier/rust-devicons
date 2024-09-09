@@ -1,6 +1,6 @@
 # 🦀 `devicons`
 
-`devicons` is a Rust library inspired by [vim-devicons](https://github.com/ryanoasis/vim-devicons), providing functionality to retrieve filetype glyphs (icons) for a wide range of common file formats.
+`devicons` is a very simple and efficient Rust library inspired by [vim-devicons](https://github.com/ryanoasis/vim-devicons), providing functionality to retrieve filetype glyphs (icons) for a wide range of common file formats.
 
 
 <img width="450" alt="Screenshot 2024-09-09 at 14 20 58" src="https://github.com/user-attachments/assets/f7fefd9e-df15-4536-ae5a-6e835ba4ce39">
