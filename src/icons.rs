@@ -1,4 +1,7 @@
-use std::path::Path;
+use std::{
+    fmt::{self, Display, Formatter},
+    path::Path,
+};
 
 pub mod dark;
 pub mod light;
@@ -41,6 +44,18 @@ pub enum Theme {
 pub struct FileIcon {
     pub icon: char,
     pub color: &'static str,
+}
+
+//impl Display for FileIcon {
+//    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+//        write!(f, "{}", self.icon)
+//    }
+//}
+
+impl Display for FileIcon {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(f, "\x1b[38;2;{}m{}", self.color, self.icon)
+    }
 }
 
 const DEFAULT_FILE_ICON: FileIcon = FileIcon {
