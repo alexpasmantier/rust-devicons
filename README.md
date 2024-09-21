@@ -1,9 +1,8 @@
 # 🦀 `rust-devicons`
 
-`devicons` is a very simple and efficient Rust library inspired by [vim-devicons](https://github.com/ryanoasis/vim-devicons), providing functionality to retrieve filetype glyphs (icons) for a wide range of common file formats.
+A dead-simple and efficient Rust library inspired by [vim-devicons](https://github.com/ryanoasis/vim-devicons), providing functionality to retrieve filetype glyphs (icons) for a wide range of common file formats.
 
-
-<img width="450" alt="Screenshot 2024-09-09 at 14 20 58" src="https://github.com/user-attachments/assets/f7fefd9e-df15-4536-ae5a-6e835ba4ce39">
+<img width="2197" alt="rust-devicons" src="https://github.com/user-attachments/assets/f2beb589-f97d-4afd-9262-483f59bc2ad8">
 
 ## Features
 
@@ -11,6 +10,9 @@
 - 🦞 **Icon Color**: Retrieve the color associated with the icon depending on the specified theme.
 - 🦞 **Filetype Support**: Supports a wide range of filetypes and filename conventions (dockerfile, makefile, etc.).
 - 🦞 **Customizable Themes**: Supports both light and dark themes.
+
+<img width="1443" alt="Screenshot 2024-09-21 at 16 54 16" src="https://github.com/user-attachments/assets/4e60cb61-2e02-4f21-965c-2b934a15575c">
+
 
 ## Installation
 
