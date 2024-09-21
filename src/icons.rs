@@ -46,15 +46,9 @@ pub struct FileIcon {
     pub color: &'static str,
 }
 
-//impl Display for FileIcon {
-//    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-//        write!(f, "{}", self.icon)
-//    }
-//}
-
 impl Display for FileIcon {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(f, "\x1b[38;2;{}m{}", self.color, self.icon)
+        write!(f, "{}", self.icon)
     }
 }
 
