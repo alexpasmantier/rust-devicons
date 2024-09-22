@@ -40,7 +40,7 @@ pub enum Theme {
     Dark,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash, Copy)]
 pub struct FileIcon {
     pub icon: char,
     pub color: &'static str,
@@ -49,6 +49,12 @@ pub struct FileIcon {
 impl Display for FileIcon {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.icon)
+    }
+}
+
+impl Default for FileIcon {
+    fn default() -> Self {
+        DEFAULT_FILE_ICON
     }
 }
 
