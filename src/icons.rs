@@ -75,6 +75,13 @@ impl<'a> From<&'a str> for FileIcon {
     }
 }
 
+impl From<&String> for FileIcon {
+    fn from(path: &String) -> FileIcon {
+        let path = Path::new(path);
+        icon_for_file(path, None)
+    }
+}
+
 impl Display for FileIcon {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.icon)
