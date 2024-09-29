@@ -16,11 +16,8 @@ A dead-simple and efficient Rust library inspired by [vim-devicons](https://gith
 
 ## Installation
 
-Add this to your `Cargo.toml`:
-
-```toml
-[dependencies]
-devicons = "0.1.0"
+```sh
+cargo add devicons
 ```
 
 _**NOTE**: you'll need to use a [NerdFont](https://www.nerdfonts.com/) to properly display the icons._
@@ -31,15 +28,17 @@ Here’s a simple example of how to use `devicons` to retrieve a file icon with 
 
 ```rust
 use std::path::Path;
-use your_library::{File, Theme, icon_for_file};
+use devicons::{File, Theme, icon_for_file};
 
 fn main() {
+    // getting the icon from a path
     let path = Path::new("example.txt");
-    let file = File::new(path);
+    let icon = icon_for_file(path, Some(Theme::Dark));
 
-    let icon = icon_for_file(&file, Some(Theme::Dark));
+    // getting the icon from a str
+    let icon = icon_for_file("example.txt", Some(Theme::Dark));
 
-    println!("File: {}", file.name);
+    println!("File: {}", path.to_string_lossy());
     println!("Icon: {}", icon.icon);
     println!("Color: {}", icon.color);
 }

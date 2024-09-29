@@ -13,8 +13,11 @@ pub struct File<'a> {
 }
 
 impl File<'_> {
-    pub fn new<'a>(path: &'a Path) -> File<'a> {
-        let path = path;
+    pub fn new<'a, P>(path: P) -> File<'a>
+    where
+        P: Into<&'a Path>,
+    {
+        let path: &Path = path.into();
         let name = path.file_name().unwrap().to_str().unwrap();
         let ext = Self::ext(path);
 
@@ -32,6 +35,19 @@ impl File<'_> {
         let name = path.file_name().map(|f| f.to_string_lossy().to_string())?;
 
         name.rfind('.').map(|p| name[p + 1..].to_ascii_lowercase())
+    }
+}
+
+impl<'a> From<&'a Path> for File<'a> {
+    fn from(path: &'a Path) -> File<'a> {
+        File::new(path)
+    }
+}
+
+impl<'a> From<&'a str> for File<'a> {
+    fn from(path: &'a str) -> File<'a> {
+        let path = Path::new(path); // Convert &str to &Path
+        File::new(path)
     }
 }
 
@@ -68,11 +84,15 @@ const DEFAULT_DIR_ICON: FileIcon = FileIcon {
     color: "#7e8e91",
 };
 
-pub fn icon_for_file(file: &File<'_>, theme: Option<Theme>) -> FileIcon {
+pub fn icon_for_file<'a, F>(file: F, theme: Option<Theme>) -> FileIcon
+where
+    F: Into<File<'a>>,
+{
+    let file = file.into();
     match theme {
-        Some(Theme::Light) => light_icon_for_file(file),
-        Some(Theme::Dark) => dark_icon_for_file(file),
-        None => dark_icon_for_file(file),
+        Some(Theme::Light) => light_icon_for_file(&file),
+        Some(Theme::Dark) => dark_icon_for_file(&file),
+        None => dark_icon_for_file(&file),
     }
 }
 
@@ -162,9 +182,8 @@ mod tests {
     #[test]
     fn test_icon_for_file_with_light_theme() {
         let path = Path::new("file.txt");
-        let file = File::new(path);
 
-        let icon = icon_for_file(&file, Some(Theme::Light));
+        let icon = icon_for_file(path, Some(Theme::Light));
         assert_eq!(icon.icon, '󰈙');
         assert_eq!(icon.color, "#447028");
     }
@@ -174,7 +193,7 @@ mod tests {
         let path = Path::new("file.txt");
         let file = File::new(path);
 
-        let icon = icon_for_file(&file, Some(Theme::Dark));
+        let icon = icon_for_file(file, Some(Theme::Dark));
         assert_eq!(icon.icon, '󰈙');
         assert_eq!(icon.color, "#89e051");
     }
@@ -184,7 +203,7 @@ mod tests {
         let path = Path::new("some_directory/");
         let file = File::new(path);
 
-        let icon = icon_for_file(&file, Some(Theme::Dark));
+        let icon = icon_for_file(file, Some(Theme::Dark));
         assert_eq!(icon.icon, '\u{f115}'); // Default directory icon
         assert_eq!(icon.color, "#7e8e91");
     }
@@ -194,7 +213,7 @@ mod tests {
         let path = Path::new("file.txt");
         let file = File::new(path);
 
-        let icon = icon_for_file(&file, None); // Should default to Dark theme
+        let icon = icon_for_file(file, None); // Should default to Dark theme
         assert_eq!(icon.icon, '󰈙');
         assert_eq!(icon.color, "#89e051");
     }
