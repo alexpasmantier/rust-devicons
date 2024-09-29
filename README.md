@@ -28,15 +28,21 @@ Here’s a simple example of how to use `devicons` to retrieve a file icon with 
 
 ```rust
 use std::path::Path;
-use devicons::{File, Theme, icon_for_file};
+use devicons::{File, Theme, icon_for_file, FileIcon};
 
 fn main() {
-    // getting the icon from a path
-    let path = Path::new("example.txt");
+    // getting the icon from a path with a specified theme
+    let path = Path::new("Cargo.toml");
     let icon = icon_for_file(path, Some(Theme::Dark));
 
-    // getting the icon from a str
-    let icon = icon_for_file("example.txt", Some(Theme::Dark));
+    // getting the icon from a string with a specified theme
+    let icon = icon_for_file("Cargo.toml", Some(Theme::Dark));
+
+    // getting the icon from a path with the default theme
+    let icon = FileIcon::from(path);
+
+    // directly getting an icon from a filename
+    let icon = FileIcon::from("Cargo.toml");
 
     println!("File: {}", path.to_string_lossy());
     println!("Icon: {}", icon.icon);

@@ -4,7 +4,7 @@ version = 3
 
 [[package]]
 name = "devicons"
-version = "0.3.3"
+version = "0.4.4"
 dependencies = [
  "lazy_static",
 ]

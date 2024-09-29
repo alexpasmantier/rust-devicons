@@ -62,6 +62,19 @@ pub struct FileIcon {
     pub color: &'static str,
 }
 
+impl<'a> From<&'a Path> for FileIcon {
+    fn from(path: &'a Path) -> FileIcon {
+        icon_for_file(path, None)
+    }
+}
+
+impl<'a> From<&'a str> for FileIcon {
+    fn from(path: &'a str) -> FileIcon {
+        let path = Path::new(path);
+        icon_for_file(path, None)
+    }
+}
+
 impl Display for FileIcon {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.icon)
