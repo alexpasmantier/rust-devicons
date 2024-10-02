@@ -13,11 +13,11 @@ pub struct File<'a> {
 }
 
 impl File<'_> {
-    pub fn new<'a, P>(path: P) -> File<'a>
+    pub fn new<'a, P>(path: &'a P) -> File<'a>
     where
-        P: Into<&'a Path>,
+        P: AsRef<Path> + 'a + ?Sized,
     {
-        let path: &Path = path.into();
+        let path: &Path = path.as_ref();
         let name = path.file_name().unwrap().to_str().unwrap();
         let ext = Self::ext(path);
 
@@ -38,15 +38,11 @@ impl File<'_> {
     }
 }
 
-impl<'a> From<&'a Path> for File<'a> {
-    fn from(path: &'a Path) -> File<'a> {
-        File::new(path)
-    }
-}
-
-impl<'a> From<&'a str> for File<'a> {
-    fn from(path: &'a str) -> File<'a> {
-        let path = Path::new(path); // Convert &str to &Path
+impl<'a, P> From<&'a P> for File<'a>
+where
+    P: AsRef<Path> + 'a + ?Sized,
+{
+    fn from(path: &'a P) -> File<'a> {
         File::new(path)
     }
 }
@@ -62,22 +58,12 @@ pub struct FileIcon {
     pub color: &'static str,
 }
 
-impl<'a> From<&'a Path> for FileIcon {
-    fn from(path: &'a Path) -> FileIcon {
-        icon_for_file(path, None)
-    }
-}
-
-impl<'a> From<&'a str> for FileIcon {
-    fn from(path: &'a str) -> FileIcon {
-        let path = Path::new(path);
-        icon_for_file(path, None)
-    }
-}
-
-impl From<&String> for FileIcon {
-    fn from(path: &String) -> FileIcon {
-        let path = Path::new(path);
+impl<'a, P> From<P> for FileIcon
+where
+    P: AsRef<Path> + 'a,
+{
+    fn from(path: P) -> FileIcon {
+        let path = path.as_ref();
         icon_for_file(path, None)
     }
 }
