@@ -1,3 +1,7 @@
+![docs.rs](https://img.shields.io/docsrs/devicons)
+![Crates.io Total Downloads](https://img.shields.io/crates/d/devicons)
+
+
 # 🦀 `rust-devicons`
 
 A Rust library inspired by [vim-devicons](https://github.com/ryanoasis/vim-devicons), that provides filetype glyphs (icons) for a wide range of common file formats.
