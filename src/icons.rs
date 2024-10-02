@@ -1,3 +1,44 @@
+/*!
+A Rust library inspired by vim-devicons, that provides filetype glyphs (icons) for a wide range of common file formats.
+
+# TLDR
+
+```rust
+use devicons::{icon_for_file, FileIcon, Theme};
+use std::path::Path;
+
+fn main() {
+    // getting the icon from a path with a specified theme
+    let path = Path::new("Cargo.toml");
+    let icon_1 = icon_for_file(path, Some(Theme::Dark));
+
+    // getting the icon from a string with a specified theme
+    let icon_2 = icon_for_file("Cargo.toml", Some(Theme::Dark));
+
+    // getting the icon from a path with the default theme
+    let icon_3 = FileIcon::from(path);
+
+    // directly getting an icon from a filename
+    let icon_4 = FileIcon::from("Cargo.toml");
+
+    // from a PathBuf
+    let icon_5 = FileIcon::from(std::path::PathBuf::from("Cargo.toml"));
+
+    // from a String
+    let icon_6 = FileIcon::from("Cargo.toml".to_string());
+
+    println!("File: {}", path.to_string_lossy());
+    println!("Icon: {} {}", icon_1.icon, icon_1.color);
+    println!("Icon: {} {}", icon_2.icon, icon_2.color);
+    println!("Icon: {} {}", icon_3.icon, icon_3.color);
+    println!("Icon: {} {}", icon_4.icon, icon_4.color);
+    println!("Icon: {} {}", icon_5.icon, icon_5.color);
+    println!("Icon: {} {}", icon_6.icon, icon_6.color);
+}
+```
+
+*/
+
 use std::{
     fmt::{self, Display, Formatter},
     path::Path,
@@ -52,6 +93,28 @@ pub enum Theme {
     Dark,
 }
 
+/// The FileIcon struct contains the icon and color of a file type.
+///
+/// This struct is probably the only one you should interact with directly
+/// and is the preferred way to get the icon for a file.
+
+/// The `icon` field is a unicode character that corresponds to the correct
+/// icon for the file type (which can be printed to the terminal with fonts
+/// that support it, e.g. typically NerdFonts).
+///
+/// The `color` field is a hex color code that corresponds to the color of the
+/// icon. This can be used to color the icon in the terminal using your own method
+/// (e.g. ANSI escape codes, existing crates like `termcolor` etc.).
+///
+/// # Example
+///
+/// ```rust
+/// use devicons::{FileIcon};
+///
+/// let icon = FileIcon::from("Cargo.toml");
+///
+/// println!("Icon: {} {}", icon.icon, icon.color);
+/// ```
 #[derive(Clone, Debug, PartialEq, Eq, Hash, Copy)]
 pub struct FileIcon {
     pub icon: char,
@@ -90,6 +153,24 @@ const DEFAULT_DIR_ICON: FileIcon = FileIcon {
     color: "#7e8e91",
 };
 
+/// Get the icon for a file.
+///
+/// This function takes anything that might convert easily to a Path and an
+/// optional theme and returns a `FileIcon` struct.
+///
+/// The only real reason to use this function is if you want to specify a theme.
+/// If you don't care about the theme, you can use the `FileIcon::from` trait
+/// implementation instead.
+///
+/// # Example
+/// ```rust
+/// use devicons::{icon_for_file, FileIcon, Theme};
+/// use std::path::Path;
+///
+/// let path = Path::new("Cargo.toml");
+/// let icon = icon_for_file(path, Some(Theme::Dark));
+/// println!("Icon: {} {}", icon.icon, icon.color);
+/// ```
 pub fn icon_for_file<'a, F>(file: F, theme: Option<Theme>) -> FileIcon
 where
     F: Into<File<'a>>,
