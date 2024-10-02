@@ -7,6 +7,41 @@ pub mod dark;
 pub mod light;
 
 /// A struct representing a file you wish to get the associated icon for.
+///
+/// You can create a `File` struct from anything that can be converted to a `Path`.
+///
+/// # Example
+/// ```rust
+/// use devicons::File;
+///
+/// let path = std::path::Path::new("Cargo.toml");
+/// let file = File::new(path);
+/// ```
+///
+/// You can also use the `From` trait to convert a `Path` to a `File`:
+/// ```rust
+/// use devicons::File;
+/// use std::path::Path;
+///
+/// let path = Path::new("Cargo.toml");
+/// let file: File = path.into();
+/// ```
+///
+/// The same goes for `PathBuf`, `String`, and `&str`.:
+/// ```rust
+/// use devicons::File;
+/// use std::path::PathBuf;
+///
+/// // From PathBuf
+/// let path = PathBuf::from("Cargo.toml");
+/// let file: File = path.into();
+///
+/// // From String
+/// let file: File = "Cargo.toml".to_string().into();
+///
+/// // From &str
+/// let file: File = "Cargo.toml".into();
+/// ```
 pub struct File<'a> {
     path: &'a Path,
     pub name: &'a str,
