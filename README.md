@@ -1,5 +1,10 @@
 ![docs.rs](https://img.shields.io/docsrs/devicons)
 ![Crates.io Total Downloads](https://img.shields.io/crates/d/devicons)
+![GitHub License](https://img.shields.io/github/license/alexpasmantier/rust-devicons)
+![Crates.io Version](https://img.shields.io/crates/v/devicons)
+![Crates.io Size](https://img.shields.io/crates/size/devicons)
+
+
 
 
 # 🦀 `rust-devicons`
