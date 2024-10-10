@@ -6,7 +6,7 @@ fn main() {
     let path = Path::new("example.txt");
 
     // Get the icon for this file with the dark theme
-    let icon = icon_for_file(path, Some(Theme::Dark));
+    let icon = icon_for_file(path, &Some(Theme::Dark));
 
     // Print its corresponding icon
     println!("Filename: {}", path.to_string_lossy());

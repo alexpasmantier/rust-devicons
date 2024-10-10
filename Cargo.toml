@@ -1,9 +1,9 @@
 [package]
 name = "devicons"
-version = "0.6.7"
+version = "0.6.8"
 edition = "2021"
 authors = ["Alexandre Pasmantier <alex.pasmant@gmail.com>"]
-license = "Unlicense"
+license = "Apache-2.0"
 description = "A Rust library that provides filetype glyphs (icons) for a wide range of common file formats."
 readme = "README.md"
 homepage = "https://github.com/alexpasmantier/rust-devicons"
