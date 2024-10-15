@@ -28,21 +28,7 @@ pub mod light;
 /// let file: File = path.into();
 /// ```
 ///
-/// The same goes for `PathBuf`, `String`, and `&str`.:
-/// ```rust
-/// use devicons::File;
-/// use std::path::PathBuf;
-///
-/// // From PathBuf
-/// let path = PathBuf::from("Cargo.toml");
-/// let file: File = path.into();
-///
-/// // From String
-/// let file: File = "Cargo.toml".to_string().into();
-///
-/// // From &str
-/// let file: File = "Cargo.toml".into();
-/// ```
+/// See more examples in the `examples` directory.
 pub struct File<'a> {
     path: &'a Path,
     pub name: &'a str,
@@ -171,7 +157,7 @@ pub const DEFAULT_DIR_ICON: FileIcon = FileIcon {
 /// use std::path::Path;
 ///
 /// let path = Path::new("Cargo.toml");
-/// let icon = icon_for_file(path, Some(Theme::Dark));
+/// let icon = icon_for_file(path, &Some(Theme::Dark));
 /// println!("Icon: {} {}", icon.icon, icon.color);
 /// ```
 pub fn icon_for_file<'a, F>(file: F, theme: &Option<Theme>) -> FileIcon

@@ -9,10 +9,10 @@ use std::path::Path;
 
 // getting the icon from a path with a specified theme
 let path = Path::new("Cargo.toml");
-let icon_1 = icon_for_file(path, Some(Theme::Dark));
+let icon_1 = icon_for_file(path, &Some(Theme::Dark));
 
 // getting the icon from a string with a specified theme
-let icon_2 = icon_for_file("Cargo.toml", Some(Theme::Dark));
+let icon_2 = icon_for_file("Cargo.toml", &Some(Theme::Dark));
 
 // getting the icon from a path with the default theme
 let icon_3 = FileIcon::from(path);
