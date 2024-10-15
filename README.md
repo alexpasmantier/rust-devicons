@@ -1,3 +1,4 @@
+![GitHub branch check runs](https://img.shields.io/github/check-runs/alexpasmantier/rust-devicons/main)
 ![docs.rs](https://img.shields.io/docsrs/devicons)
 ![Crates.io Total Downloads](https://img.shields.io/crates/d/devicons)
 ![GitHub License](https://img.shields.io/github/license/alexpasmantier/rust-devicons)
