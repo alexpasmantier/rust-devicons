@@ -69,5 +69,5 @@ cargo run --example <example_name>
 
 ## License
 
-This project is licensed under the [UNLICENSE license](LICENSE).
+This project is licensed under the [Apache 2.0 License](LICENSE). 
 
