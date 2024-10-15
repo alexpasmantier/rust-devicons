@@ -66,14 +66,17 @@ impl File<'_> {
     }
 
     fn points_to_directory(&self) -> bool {
-        self.path.display().to_string().ends_with('/')
+        // test for a trailing '/' in order to potentially short circuit the
+        // is_dir() call
+        self.path.display().to_string().ends_with('/') || self.path.is_dir()
     }
 
     fn ext(path: &Path) -> Option<String> {
         if let Some(ext) = path.extension() {
             return Some(ext.to_string_lossy().to_string());
         }
-        let name = path.file_name().map(|f| f.to_string_lossy().to_string())?;
+        let name =
+            path.file_name().map(|f| f.to_string_lossy().to_string())?;
 
         name.rfind('.').map(|p| name[p + 1..].to_ascii_lowercase())
     }
@@ -143,12 +146,12 @@ impl Default for FileIcon {
     }
 }
 
-const DEFAULT_FILE_ICON: FileIcon = FileIcon {
+pub const DEFAULT_FILE_ICON: FileIcon = FileIcon {
     icon: '\u{f016}',
     color: "#7e8e91",
 };
 
-const DEFAULT_DIR_ICON: FileIcon = FileIcon {
+pub const DEFAULT_DIR_ICON: FileIcon = FileIcon {
     icon: '\u{f115}',
     color: "#7e8e91",
 };
@@ -188,7 +191,9 @@ fn dark_icon_for_file(file: &File<'_>) -> FileIcon {
     } else if let Some(extension) = &file.ext {
         if let Some(icon) = dark::ICONS_MAP.get(extension.as_str()) {
             *icon
-        } else if let Some(icon) = dark::ICONS_MAP.get(extension.to_lowercase().as_str()) {
+        } else if let Some(icon) =
+            dark::ICONS_MAP.get(extension.to_lowercase().as_str())
+        {
             *icon
         } else {
             DEFAULT_FILE_ICON
@@ -206,7 +211,9 @@ fn light_icon_for_file(file: &File<'_>) -> FileIcon {
     } else if let Some(extension) = &file.ext {
         if let Some(icon) = light::ICONS_MAP.get(extension.as_str()) {
             *icon
-        } else if let Some(icon) = light::ICONS_MAP.get(extension.to_lowercase().as_str()) {
+        } else if let Some(icon) =
+            light::ICONS_MAP.get(extension.to_lowercase().as_str())
+        {
             *icon
         } else {
             DEFAULT_FILE_ICON
