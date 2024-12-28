@@ -284,7 +284,7 @@ mod tests {
 
         let icon = icon_for_file(file, &Some(Theme::Dark));
         assert_eq!(icon.icon, '\u{f115}'); // Default directory icon
-        assert_eq!(icon.color, "#7e8e91");
+        assert_eq!(icon.color, "#7e8ea8");
     }
 
     #[test]
