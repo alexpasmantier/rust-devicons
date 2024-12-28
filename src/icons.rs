@@ -133,13 +133,13 @@ impl Default for FileIcon {
 }
 
 pub const DEFAULT_FILE_ICON: FileIcon = FileIcon {
-    icon: '\u{f016}',
-    color: "#7e8e91",
+    icon: '*',
+    color: "#7e8ea8",
 };
 
 pub const DEFAULT_DIR_ICON: FileIcon = FileIcon {
     icon: '\u{f115}',
-    color: "#7e8e91",
+    color: "#7e8ea8",
 };
 
 /// Get the icon for a file.
