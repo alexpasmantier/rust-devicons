@@ -174,6 +174,8 @@ where
 fn dark_icon_for_file(file: &File<'_>) -> FileIcon {
     if let Some(icon) = dark::ICONS_MAP.get(file.name) {
         *icon
+    } else if file.points_to_directory() {
+        DEFAULT_DIR_ICON
     } else if let Some(extension) = &file.ext {
         if let Some(icon) = dark::ICONS_MAP.get(extension.as_str()) {
             *icon
@@ -184,8 +186,6 @@ fn dark_icon_for_file(file: &File<'_>) -> FileIcon {
         } else {
             DEFAULT_FILE_ICON
         }
-    } else if file.points_to_directory() {
-        DEFAULT_DIR_ICON
     } else {
         DEFAULT_FILE_ICON
     }
@@ -194,6 +194,8 @@ fn dark_icon_for_file(file: &File<'_>) -> FileIcon {
 fn light_icon_for_file(file: &File<'_>) -> FileIcon {
     if let Some(icon) = light::ICONS_MAP.get(file.name) {
         *icon
+    } else if file.points_to_directory() {
+        DEFAULT_DIR_ICON
     } else if let Some(extension) = &file.ext {
         if let Some(icon) = light::ICONS_MAP.get(extension.as_str()) {
             *icon
@@ -204,8 +206,6 @@ fn light_icon_for_file(file: &File<'_>) -> FileIcon {
         } else {
             DEFAULT_FILE_ICON
         }
-    } else if file.points_to_directory() {
-        DEFAULT_DIR_ICON
     } else {
         DEFAULT_FILE_ICON
     }
@@ -288,6 +288,18 @@ mod tests {
     }
 
     #[test]
+    fn test_directory_icon_wins_over_extension() {
+        // hidden directory (https://github.com/alexpasmantier/rust-devicons/issues/1)
+        let icon = icon_for_file(Path::new(".empty/"), &Some(Theme::Dark));
+        assert_eq!(icon, DEFAULT_DIR_ICON);
+
+        // directory with dots in its name
+        let icon =
+            icon_for_file(Path::new("abc-package-1.2.3/"), &Some(Theme::Dark));
+        assert_eq!(icon, DEFAULT_DIR_ICON);
+    }
+
+    #[test]
     fn test_icon_for_file_with_no_theme() {
         let path = Path::new("file.txt");
         let file = File::new(path);
@@ -295,5 +307,25 @@ mod tests {
         let icon = icon_for_file(file, &None); // Should default to Dark theme
         assert_eq!(icon.icon, '󰈙');
         assert_eq!(icon.color, "#89e051");
+    }
+
+    #[test]
+    fn test_icon_for_leading_dot_dir() {
+        let path = Path::new(".empty/");
+        let file = File::new(path);
+
+        let icon = icon_for_file(file, &Some(Theme::Dark));
+        assert_eq!(icon.icon, '\u{f115}'); // Default directory icon
+        assert_eq!(icon.color, "#7e8ea8");
+    }
+
+    #[test]
+    fn test_icon_for_dir_with_unknown_extension() {
+        let path = Path::new("abc-package-1.2.3/");
+        let file = File::new(path);
+
+        let icon = icon_for_file(file, &Some(Theme::Dark));
+        assert_eq!(icon.icon, '\u{f115}'); // Default directory icon
+        assert_eq!(icon.color, "#7e8ea8");
     }
 }
